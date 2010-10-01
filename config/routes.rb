@@ -1,6 +1,8 @@
 WhereAreWe::Application.routes.draw do
   root :to => "visits#new"
   resources :visits
+  
+  match "/application.manifest" => Rails::Offline
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
