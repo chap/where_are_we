@@ -18,4 +18,8 @@ class Visit < ActiveRecord::Base
       end
     end
   end
+  
+  def city_state
+    "#{self.city}, #{self.state} (#{self.zip})"
+  end
 end

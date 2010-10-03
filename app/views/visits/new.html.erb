@@ -1,9 +1,12 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    navigator.geolocation.getCurrentPosition(geo_success, geo_fail);
+    $('#position_status').html("<img src='/images/spinner.gif' />");
+    navigator.geolocation.getCurrentPosition(geo_success, geo_fail,{maximumAge:600000});
   });
 
   function geo_success(position) {
+    $('#position_status').html("<img src='/images/success.png' />");
+    $('#geo_status').html("<img src='/images/spinner.gif' />");
     jQuery.ajax({
       type: 'POST',
       url: '/visits',
@@ -18,11 +21,14 @@
       dataType: 'json',
       success: function(data, textStatus, request) {
         showCurrentAddress(data);
+        $('#geo_status').html("<img src='/images/success.png' />");
+        $('#match_status').html("<img src='/images/spinner.gif' />");
       }
     });
   }
 
   function geo_fail(position) {
+    $('#position_status').html("<img src='/images/fail.png' />");
   	jQuery.ajax({
       type: 'POST',
       url: '/visits.json',
@@ -36,19 +42,24 @@
   }
 
   function showCurrentAddress(data) {
-    $('#city').html(data['visit']['city']);
-    $('#comma').show();
-    $('#state').html(data['visit']['state']);
-    $('#zip').html(data['visit']['zip']);
-    $('#spinner').hide();
+    $('#look_around').show();
+    $('#city_state').html(data['visit']['city_state']);
+    $('#lot_like').show();
   }
 </script>
 
-<%= image_tag('spinner.gif', :id => 'spinner') %>
+<div id="debug" style="magin-bottom:20px;">
+  <span id="position_status"></span> Browser pass lat/long<br />
+  <span id="geo_status"></span> Map your location<br />
+  <span id="match_status"></span> Match you up<br />
+</div>
 
-<h1>
-  <span id="city"></span>
-  <span id="comma" style="display:none;">,</span>
-  <span id="state"></span>
-  <span id="zip"></span>
-</h1>
+<h3 id="look_around" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">
+  Look around
+</h3>
+
+<h1 id="city_state" style="color:#fff;padding:0;margin:0;"></h1>
+
+<h3 id="lot_like" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">
+  is a lot like
+</h3>
