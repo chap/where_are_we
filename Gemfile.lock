@@ -33,6 +33,7 @@ GEM
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    geokit (1.5.0)
     i18n (0.4.1)
     mail (2.2.5)
       activesupport (>= 2.3.6)
@@ -43,6 +44,7 @@ GEM
     rack (1.2.1)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
+    rack-offline (0.6.1)
     rack-test (0.5.4)
       rack (>= 1.0)
     rails (3.0.0)
@@ -69,5 +71,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  geokit (= 1.5.0)
+  rack-offline (= 0.6.1)
   rails (= 3.0.0)
   sqlite3-ruby

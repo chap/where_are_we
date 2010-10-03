@@ -24,12 +24,6 @@ class VisitsController < ApplicationController
   # GET /visits/new
   # GET /visits/new.xml
   def new
-    @visit = Visit.new(:ip => request.remote_ip)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @visit }
-    end
   end
 
   # GET /visits/1/edit
@@ -46,9 +40,11 @@ class VisitsController < ApplicationController
       if @visit.save
         format.html { redirect_to(@visit, :notice => 'Visit was successfully created.') }
         format.xml  { render :xml => @visit, :status => :created, :location => @visit }
+        format.json  { render :json => @visit, :status => :created, :location => @visit }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @visit.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @visit.errors, :status => :unprocessable_entity }
       end
     end
   end

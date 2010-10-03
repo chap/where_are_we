@@ -1,22 +1,54 @@
-<h1>New visit</h1>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#spinner').show();
-    navigator.geolocation.getCurrentPosition(success, fail);
-    // success callback, gets passed position object
-    function success(position) {
-      $('#visit_lat').val(position.coords.latitude);
-      $('#visit_lng').val(position.coords.longitude);
-      $('#spinner').hide();
-    }
-    function fail(position) {
-      alert("Positioning Failure");
-      $('#spinner').hide();
-    }
+    navigator.geolocation.getCurrentPosition(geo_success, geo_fail);
   });
+
+  function geo_success(position) {
+    jQuery.ajax({
+      type: 'POST',
+      url: '/visits',
+      data: {
+        visit: {
+          ip: '<%= request.remote_ip %>',
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          positioning_success: true
+        }
+      },
+      dataType: 'json',
+      success: function(data, textStatus, request) {
+        showCurrentAddress(data);
+      }
+    });
+  }
+
+  function geo_fail(position) {
+  	jQuery.ajax({
+      type: 'POST',
+      url: '/visits.json',
+      data: {
+        visit: {
+          ip: '<%= request.remote_ip %>',
+          positioning_success: false
+        }
+      }
+    });
+  }
+
+  function showCurrentAddress(data) {
+    $('#city').html(data['visit']['city']);
+    $('#comma').show();
+    $('#state').html(data['visit']['state']);
+    $('#zip').html(data['visit']['zip']);
+    $('#spinner').hide();
+  }
 </script>
 
-<%= render 'form' %>
-<%= image_tag('spinner.gif', :id => 'spinner', :style => 'display:none;') %>
+<%= image_tag('spinner.gif', :id => 'spinner') %>
 
-<%= link_to 'Back', visits_path %>
+<h1>
+  <span id="city"></span>
+  <span id="comma" style="display:none;">,</span>
+  <span id="state"></span>
+  <span id="zip"></span>
+</h1>
