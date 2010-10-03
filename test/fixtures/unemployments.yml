@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  country: 
+  year: 1
+  coverage: MyString
+  source: MyString
+  type: MyString
+  value: 1.5
+
+two:
+  country: 
+  year: 1
+  coverage: MyString
+  source: MyString
+  type: MyString
+  value: 1.5

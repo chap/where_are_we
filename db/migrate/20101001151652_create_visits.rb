@@ -1,6 +1,8 @@
 class CreateVisits < ActiveRecord::Migration
   def self.up
     create_table :visits do |t|
+      t.references :us_county
+      t.references :match_country
       t.string :ip
       t.float :lat
       t.float :lng

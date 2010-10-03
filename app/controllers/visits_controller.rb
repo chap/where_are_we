@@ -40,11 +40,23 @@ class VisitsController < ApplicationController
       if @visit.save
         format.html { redirect_to(@visit, :notice => 'Visit was successfully created.') }
         format.xml  { render :xml => @visit, :status => :created, :location => @visit }
-        format.json  { render :json => @visit, :status => :created, :location => @visit, :methods => :city_state }
+        format.json  { render :json => @visit, :status => :created, :location => @visit, :methods => [:city_state, :unemployment_rate] }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @visit.errors, :status => :unprocessable_entity }
         format.json  { render :json => @visit.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  def match_country
+    @visit = Visit.find(params[:id])
+    @country = @visit.match_country
+    respond_to do |format|
+      if @country
+        format.json  { render :json => @country, :status => :created, :methods => :unemployment_rate}
+      else
+        format.json { head :bad_request}
       end
     end
   end

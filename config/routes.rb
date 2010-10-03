@@ -1,8 +1,10 @@
 WhereAreWe::Application.routes.draw do
   root :to => "visits#new"
-  resources :visits
-  
   match "/application.manifest" => Rails::Offline
+  
+  resources :visits do
+    post 'match_country', :on => :member
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

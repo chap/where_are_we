@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.0'
 gem 'geokit', '1.5.0'
 gem 'rack-offline', '0.6.1'
+gem 'fastercsv', '1.5.3'
+gem 'mysql'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

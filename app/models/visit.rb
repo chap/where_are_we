@@ -1,6 +1,32 @@
 class Visit < ActiveRecord::Base
-  after_create :address_lookup
+  belongs_to :us_county
+  belongs_to :match_country, :class_name => 'Country'
+  after_create :address_lookup, :associate_us_county
+  
+  def city_state
+    #"#{self.city}, #{self.state} (#{self.zip})"
+    "#{self.city}, #{self.state}"
+  end
+  
+  def unemployment_rate
+    us_county.unemployment_stat.unemployment_rate
+  end
 
+  def match_country
+    countries = Country.joins(:unemployment_stat).
+      where('unemployment_rate >= ?', self.us_county.unemployment_stat.unemployment_rate - 0.5).
+      where('unemployment_rate <= ?', self.us_county.unemployment_stat.unemployment_rate + 0.5)
+
+    country = countries[rand(countries.length + 1)]
+    if country
+      self.update_attributes(:match_country => country)
+      country
+    else
+      false
+    end
+  end
+
+  private
   def address_lookup
     if self.positioning_success?
       a = Geokit::Geocoders::GoogleGeocoder.reverse_geocode("#{self.lat},#{self.lng}")
@@ -19,7 +45,9 @@ class Visit < ActiveRecord::Base
     end
   end
   
-  def city_state
-    "#{self.city}, #{self.state} (#{self.zip})"
+  def associate_us_county
+    u = UsCounty.where(:state => self.state).where("name like '%#{self.city}%'").limit(1)
+    u = UsCounty.where(:state => self.state).where("name like '%#{self.city}%'").limit(1) if u.nil?
+    update_attributes(:us_county => u.first)
   end
 end

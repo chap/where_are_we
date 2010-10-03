@@ -23,8 +23,35 @@
         showCurrentAddress(data);
         $('#geo_status').html("<img src='/images/success.png' />");
         $('#match_status').html("<img src='/images/spinner.gif' />");
+        match_country(data['visit']['id']);
       }
     });
+  }
+  
+  function match_country(visit_id) {
+    jQuery.ajax({
+      type: 'POST',
+      url: '/visits/' + visit_id + '/match_country',
+      dataType: 'json',
+      success: function(data, textStatus, request) {
+        showMatch(data);
+        $('#match_status').html("<img src='/images/success.png' />");
+      }
+    });
+  }
+
+  function showCurrentAddress(data) {
+    $('#look_around').show();
+    $('#city_state').html(data['visit']['city_state']);
+    $('#my_rate').html(data['visit']['unemployment_rate'] + '%');
+    $('#lot_like').show();
+  }
+  
+  function showMatch(data) {
+    $('#match').html(data['country']['name']);
+    $('#match_rate').html(data['country']['unemployment_rate'] + '%');
+    $('#concerned').show();
+    $('#rates').show();
   }
 
   function geo_fail(position) {
@@ -40,26 +67,21 @@
       }
     });
   }
-
-  function showCurrentAddress(data) {
-    $('#look_around').show();
-    $('#city_state').html(data['visit']['city_state']);
-    $('#lot_like').show();
-  }
 </script>
 
 <div id="debug" style="magin-bottom:20px;">
   <span id="position_status"></span> Browser pass lat/long<br />
-  <span id="geo_status"></span> Map your location<br />
-  <span id="match_status"></span> Match you up<br />
+  <span id="geo_status"></span> Map location<br />
+  <span id="match_status"></span> Match location<br />
 </div>
 
-<h3 id="look_around" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">
-  Look around
-</h3>
-
+<h3 id="look_around" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">Look around,</h3>
 <h1 id="city_state" style="color:#fff;padding:0;margin:0;"></h1>
+<h3 id="lot_like" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">is a lot like</h3>
+<h1 id="match" style="color:#fff;padding:0;margin:0;"></h1>
 
-<h3 id="lot_like" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">
-  is a lot like
-</h3>
+<h3 id="concerned" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">(in terms of unemployment)</h3>
+<h1 id="rates" style="color:#fff;padding:0;margin:0;display:none;">
+ <span id="my_rate"></span> to 
+ <span id="match_rate"></span>
+</h1>

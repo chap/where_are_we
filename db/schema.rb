@@ -10,9 +10,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101001151652) do
+ActiveRecord::Schema.define(:version => 20101003221010) do
+
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "unemployment_stats", :force => true do |t|
+    t.integer  "unemployable_id"
+    t.string   "unemployable_type"
+    t.integer  "year"
+    t.string   "coverage"
+    t.string   "source"
+    t.string   "unemployment_type"
+    t.float    "unemployment_rate"
+    t.integer  "total_workforce"
+    t.integer  "total_employed"
+    t.integer  "total_unemployed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "us_counties", :force => true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "visits", :force => true do |t|
+    t.integer  "us_county_id"
+    t.integer  "match_country_id"
     t.string   "ip"
     t.float    "lat"
     t.float    "lng"
