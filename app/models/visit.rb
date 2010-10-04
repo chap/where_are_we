@@ -46,10 +46,9 @@ class Visit < ActiveRecord::Base
   end
   
   def associate_us_county
-    u = UsCounty.where('state = ?', self.state).where("lower(name) like '%#{self.city.downcase}%'").limit(1)
-    u = UsCounty.where('state = ?', self.state).where("lower(name) like '%#{self.province.downcase}%'").limit(1) if u.empty? && !u.province.blank?
-    if u.any?
-      update_attributes(:us_county => u.first)
+    u = UsCounty.find_closest(:origin => [lat, lng])
+    unless u.nil?
+      update_attributes(:us_county => u)
       u
     else
       false
