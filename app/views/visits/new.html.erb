@@ -1,11 +1,12 @@
 <script type="text/javascript">
   $(document).ready(function() {
+    $('#spinner').fadeIn('slow');
+    $('#status').fadeIn('slow');
     navigator.geolocation.getCurrentPosition(geo_success, geo_fail,{maximumAge:600000});
   });
 
   function geo_success(position) {
-    $('#position_status').html("<img src='/images/success.png' />");
-    $('#geo_status').html("<img src='/images/spinner.gif' />");
+    $('#status').text("Mapping location");;
     jQuery.ajax({
       type: 'POST',
       url: '/visits',
@@ -20,8 +21,7 @@
       dataType: 'json',
       success: function(data, textStatus, request) {
         showCurrentAddress(data);
-        $('#geo_status').html("<img src='/images/success.png' />");
-        $('#match_status').html("<img src='/images/spinner.gif' />");
+        $('#status').text("Finding match");
         match_country(data['visit']['id']);
       }
     });
@@ -34,29 +34,37 @@
       dataType: 'json',
       success: function(data, textStatus, request) {
         showMatch(data);
-        $('#match_status').html("<img src='/images/success.png' />");
-        $('#debug').hide();
+        $('#status_box').fadeOut('slow', function(){
+          $('#look_around').fadeIn(1000);
+          $('#city_state').fadeIn(2000);
+          
+          $('#lot_like').fadeIn(4000);
+          $('#match').fadeIn(4000);
+          $('#concerned').fadeIn(6000);
+          $('#rates').fadeIn(7000);
+          $('#more').fadeIn(11000);
+        });
       }
     });
   }
 
   function showCurrentAddress(data) {
-    $('#look_around').show();
-    $('#city_state').html(data['visit']['city_state']);
-    
-    $('#my_rate').html(data['visit']['unemployment_rate'] + '%');
-    $('#lot_like').show();
+    $('#city_state').text(data['visit']['city_state']);
+    $('#my_rate').text(data['visit']['unemployment_rate'] + '%');
   }
   
   function showMatch(data) {
-    $('#match').html(data['country']['name']);
-    $('#match_rate').html(data['country']['unemployment_rate'] + '%');
-    $('#concerned').show();
-    $('#rates').show();
+    $('#match').text(data['country']['name']);
+    $('#match_rate').text(data['country']['unemployment_rate'] + '%');
+  }
+  
+  function show_fail() {
+    $('#status_icon').html("<img src='/images/fail_big.png' />");
+    $('#status').text('We have failed');
   }
 
   function geo_fail(position) {
-    $('#position_status').html("<img src='/images/fail.png' />");
+    show_fail();
   	jQuery.ajax({
       type: 'POST',
       url: '/visits.json',
@@ -70,19 +78,22 @@
   }
 </script>
 
-<div id="debug" style="magin-bottom:20px;">
-  <h3><span id="position_status"><img src='/images/spinner.gif' /></span> Grant permission</h3>
-  <h3><span id="geo_status">2</span> Map location</h3>
-  <h3><span id="match_status">3</span> Match</h3>
+<div id="status_box" style="text-align:center;padding-top:50px;">
+  <div id="status_icon"><%= image_tag("spinner_big.gif", :height => 48, :id => 'spinner', :style => 'display:none;') %></div>
+  <h3 id="status" style="display:none;">Requesting permission</h3>
 </div>
 
-<h3 id="look_around" style="display:none;">look around,</h3>
-<h1 id="city_state"></h1>
-<h3 id="lot_like" style="display:none;">is a lot like</h3>
-<h1 id="match"></h1>
+<div id="match_box">
+  <h3 id="look_around" style="display:none;">look around,</h3>
+  <h1 id="city_state" style="display:none;"></h1>
+  <h3 id="lot_like" style="display:none;">is a lot like</h3>
+  <h1 id="match" style="display:none;"></h1>
 
-<h3 id="concerned" style="display:none;">in terms of unemployment</h3>
-<h1 id="rates" style="display:none;">
- <span id="my_rate"></span> v 
- <span id="match_rate"></span>
-</h1>
+  <h3 id="concerned" style="display:none;">in terms of unemployment</h3>
+  <h1 id="rates" style="display:none;">
+   <span id="my_rate"></span> v 
+   <span id="match_rate"></span>
+  </h1>
+  <br><br><br>
+  <%= link_to 'what?', '/visits', :id => 'more', :style => 'display:none;' %>
+</div>

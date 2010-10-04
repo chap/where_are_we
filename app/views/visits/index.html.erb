@@ -1,27 +1,55 @@
-<h1>Listing visits</h1>
 
-<table>
-  <tr>
-    <th>Ip</th>
-    <th>Lat</th>
-    <th>Lng</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<h1>Where Are We?</h1>
 
-<% @visits.each do |visit| %>
-  <tr>
-    <td><%= visit.ip %></td>
-    <td><%= visit.lat %></td>
-    <td><%= visit.lng %></td>
-    <td><%= link_to 'Show', visit %></td>
-    <td><%= link_to 'Edit', edit_visit_path(visit) %></td>
-    <td><%= link_to 'Destroy', visit, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<p>
+  Project 3; Readings 3A, 3B, and 3C<br />
+<%= link_to 'Chap Ambrose', "http://www.chapambrose.com" %>, <%= link_to 'Ryan Hubbard', "http://ryanhubbard.org/" %>, and <%= link_to 'Alex Pappas', "http://www.drawsalot.com/" %>
+</p>
 
-<br />
 
-<%= link_to 'New Visit', new_visit_path %>
+<p>
+  Following the prototyping ethos central to <a href="http://www.ac4d.com">AC4D</a>, for this third section of readings we decided to turn our thoughts on technology and society into a tangible product that could engage the public beyond the halls of academia.
+</p>
+
+<p>
+  We began by outlining the readings and highlighting the issues that had resonated with each of us.  Using the first set of readings on the human experience and technology, and relying especially heavily on Neil Postman#, we created a starting point from which to frame the other readings:
+</p>
+
+<blockquote>
+  Technology has lead to the ubiquity of information; to process this individuals have (consciously and unconsciously) developed different (and more sophisticated) frameworks to manage and navigate this information in the new world.
+</blockquote>
+
+<p>
+  The second and third sets of readings narrow this to talk about specific frameworks and specific contexts:
+</p>
+
+<blockquote>
+  These frameworks include our mental models of society, community, and privacy, and they differ by person and context for people in developed and developing countries. 
+</blockquote>
+
+<p>
+  Using this framing of the readings, we began brainstorming ways to create something real that would engage the public in as many of these areas as possible.  The idea was to make something fully functional so as start a dialog about these topics with regular people outside of our classroom.
+</p>
+
+</p>
+  After discarding a few dozen concepts, we came to WhereAreWe, a mobile application that harnesses the power of comparison to link a person and their physical space through a piece# of shared data to another physical place.  Comparing your immediate physical location to another location can inspire you to look at your surroundings in a new way and to change your conceptual models of how you think of both places.  We hope this app will inspire new connections, new dialogs, and interesting new conversations about the places through which we travel.
+</p>
+
+<h3>Information in Context</h3>
+
+<p>
+  Information is often presented in ways that make it hard to understand the context in which that data exists.  Through WhereAreWe, your physical location becomes the context for the presentation of the data.  WhereAreWe finds your location via the GPS on your mobile phone# and then presents a set of data that compares a statistic for your physical location with a place that shares that statistic.  For example, the unemployment rate where you are standing, on the corner of Congress and Mary in Austin, Texas, is comparable to the unemployment rate in Paris, France.  This allows the user to begin to think about the relationships between their immediate physical location and a remote location in a new way.  It provides the user with a new connection that has the possibility of changing their perspective on both their actual physical location and the remote location to which they are compared.  We hope this comparison will inspire a dialogue and further inquiry on the part o the user.#
+</p>
+
+<p>
+  As we work on this project, we have full access to all of the information that the Internet can provide, and we are finding massive amounts of data, both raw and filtered.  However, finding exactly what we want is extremely difficult,# and questions about the quality of the data arise frequently:  “where exactly is this coming from” and “how reliable is this information?”  We are also finding it hard to join data sets in meaningful ways.  Often the variables and methodologies of the studies behind the data differ in nuanced# ways that prevent valid comparisons.  So our access to the information is fantastic, but parsing the pile of data proves to be incredibly difficult.  
+</p>
+
+<p>
+  Access to data can be very powerful.  But access alone does not lead to understanding.  We have incredibly powerful search engines at our fingertips that point us in the direction of all kids of data sets.  But drawing conclusions from these data sets can be very difficult.  We hope that our App can be used as a new framework for engaging with massive amounts of data in a meaningful way.
+</p>
+
+<h3>Process</h3>
+
+<h3>Testing</h3>
+<p>We tried the application here in Austin, and had friends in other parts of the US also try it out.</p>
