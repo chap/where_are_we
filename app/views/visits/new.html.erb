@@ -1,6 +1,5 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#position_status').html("<img src='/images/spinner.gif' />");
     navigator.geolocation.getCurrentPosition(geo_success, geo_fail,{maximumAge:600000});
   });
 
@@ -36,6 +35,7 @@
       success: function(data, textStatus, request) {
         showMatch(data);
         $('#match_status').html("<img src='/images/success.png' />");
+        $('#debug').hide();
       }
     });
   }
@@ -43,6 +43,7 @@
   function showCurrentAddress(data) {
     $('#look_around').show();
     $('#city_state').html(data['visit']['city_state']);
+    
     $('#my_rate').html(data['visit']['unemployment_rate'] + '%');
     $('#lot_like').show();
   }
@@ -70,18 +71,18 @@
 </script>
 
 <div id="debug" style="magin-bottom:20px;">
-  <span id="position_status"></span> Browser pass lat/long<br />
-  <span id="geo_status"></span> Map location<br />
-  <span id="match_status"></span> Match location<br />
+  <h3><span id="position_status"><img src='/images/spinner.gif' /></span> Grant permission</h3>
+  <h3><span id="geo_status">2</span> Map location</h3>
+  <h3><span id="match_status">3</span> Match</h3>
 </div>
 
-<h3 id="look_around" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">Look around,</h3>
-<h1 id="city_state" style="color:#fff;padding:0;margin:0;"></h1>
-<h3 id="lot_like" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">is a lot like</h3>
-<h1 id="match" style="color:#fff;padding:0;margin:0;"></h1>
+<h3 id="look_around" style="display:none;">look around,</h3>
+<h1 id="city_state"></h1>
+<h3 id="lot_like" style="display:none;">is a lot like</h3>
+<h1 id="match"></h1>
 
-<h3 id="concerned" style="display:none;margin-top:20px;margin-bottom:0;padding:0;">(in terms of unemployment)</h3>
-<h1 id="rates" style="color:#fff;padding:0;margin:0;display:none;">
- <span id="my_rate"></span> to 
+<h3 id="concerned" style="display:none;">in terms of unemployment</h3>
+<h1 id="rates" style="display:none;">
+ <span id="my_rate"></span> v 
  <span id="match_rate"></span>
 </h1>

@@ -3,3 +3,29 @@ html, body {
 	color: #999;
 	font-family: 'Helvetica', arial, serif; }
 }
+
+h1, h3 {
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	-webkit-transition: opacity 1s linear
+}
+
+h1 {
+	color: #fff;
+	margin:0px;
+	padding: 0;
+}
+
+h3 {
+	margin-bottom:0px;
+	padding:0px;
+}
+
+.margin_bottom {
+	margin-bottom: 20px;
+}
+
+.fade_in {
+	opacity: 1;
+}

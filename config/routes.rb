@@ -1,6 +1,6 @@
 WhereAreWe::Application.routes.draw do
   root :to => "visits#new"
-  match "/application.manifest" => Rails::Offline
+  #match "/application.manifest" => Rails::Offline
   
   resources :visits do
     post 'match_country', :on => :member
