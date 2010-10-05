@@ -9,7 +9,7 @@
     $('#status').text("Mapping location");;
     jQuery.ajax({
       type: 'POST',
-      url: '/visits',
+      url: '/visits.json',
       data: {
         visit: {
           ip: '<%= request.remote_ip %>',
@@ -30,7 +30,7 @@
   function match_country(visit_id) {
     jQuery.ajax({
       type: 'POST',
-      url: '/visits/' + visit_id + '/match_country',
+      url: '/visits/' + visit_id + '/match_country.json',
       dataType: 'json',
       success: function(data, textStatus, request) {
         showMatch(data);
