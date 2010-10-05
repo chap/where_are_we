@@ -14,8 +14,8 @@ class Visit < ActiveRecord::Base
 
   def match_country
     countries = Country.joins(:unemployment_stat).
-      where('unemployment_rate >= ?', self.us_county.unemployment_stat.unemployment_rate - 0.5).
-      where('unemployment_rate <= ?', self.us_county.unemployment_stat.unemployment_rate + 0.5)
+      where('unemployment_rate >= ?', self.us_county.unemployment_stat.unemployment_rate - 1).
+      where('unemployment_rate <= ?', self.us_county.unemployment_stat.unemployment_rate + 1)
 
     country = countries[rand(countries.length + 1)]
     if country
