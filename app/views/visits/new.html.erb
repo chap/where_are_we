@@ -29,9 +29,12 @@
   
   function match_country(visit_id) {
     jQuery.ajax({
-      type: 'POST',
+      type: 'GET',
       url: '/visits/' + visit_id + '/match_country.json',
       dataType: 'json',
+      data: {
+        nuttin: honey
+      }
       success: function(data, textStatus, request) {
         showMatch(data);
         $('#status_box').fadeOut('slow', function(){
