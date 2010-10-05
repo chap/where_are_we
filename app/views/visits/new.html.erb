@@ -33,8 +33,8 @@
       url: '/visits/' + visit_id + '/match_country.json',
       dataType: 'json',
       data: {
-        nuttin: honey
-      }
+        nuttin: 'honey'
+      },
       success: function(data, textStatus, request) {
         showMatch(data);
         $('#status_box').fadeOut('slow', function(){
