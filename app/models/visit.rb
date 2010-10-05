@@ -13,11 +13,16 @@ class Visit < ActiveRecord::Base
   end
 
   def match_country
-    countries = Country.joins(:unemployment_stat).
-      where('unemployment_rate >= ?', self.us_county.unemployment_stat.unemployment_rate - 1).
-      where('unemployment_rate <= ?', self.us_county.unemployment_stat.unemployment_rate + 1)
+    countries = []
+    span = 0.3
+    while countries.empty? do 
+      countries = Country.joins(:unemployment_stat).
+        where('unemployment_rate >= ?', self.us_county.unemployment_stat.unemployment_rate - span).
+        where('unemployment_rate <= ?', self.us_county.unemployment_stat.unemployment_rate + span)
+      span += 0.3
+    end
 
-    country = countries[rand(countries.length + 1)]
+    country = countries[rand(countries.length)]
     if country
       self.update_attributes(:match_country => country)
       country
